@@ -628,6 +628,78 @@
     font-size: 15px;
   }
 
+  /* === Time capsule (告别信时间胶囊) === */
+  .capsule-group {
+    background: linear-gradient(135deg, var(--accent-light) 0%, rgba(196,137,74,0.04) 100%);
+    border: 1px dashed var(--accent);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .capsule-group label {
+    display: block;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .capsule-hint {
+    font-weight: 400;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-left: 6px;
+  }
+  .capsule-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .capsule-row input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+    min-width: 160px;
+  }
+  .capsule-row input[type="date"]:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+  }
+  .capsule-or {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .capsule-row select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: #fff;
+  }
+  .capsule-row select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .capsule-preview {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
+    font-size: 13px;
+    color: var(--text);
+  }
+  .capsule-preview .lock { color: var(--accent); font-weight: 600; }
+  @media (max-width: 600px) {
+    .capsule-row { flex-direction: column; align-items: stretch; }
+    .capsule-or { text-align: center; }
+  }
+
   .cost-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -653,22 +725,36 @@
     display: flex; flex-direction: column; align-items: center;
     margin-bottom: 24px;
   }
-  .completion-ring {
-    width: 120px; height: 120px;
-    position: relative;
+
+  /* === Completion Radar === */
+  .completion-radar-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding: 6px 0 4px;
   }
-  .completion-ring svg { transform: rotate(-90deg); }
-  .completion-ring-bg { fill: none; stroke: #e8e6e1; stroke-width: 8; }
-  .completion-ring-fill { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round;
-    transition: stroke-dashoffset .6s ease;
+  .completion-radar {
+    width: 280px; max-width: 100%; height: 280px;
   }
-  .completion-text {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+  .completion-radar .axis { stroke: var(--border); stroke-width: 1; }
+  .completion-radar .grid-poly { fill: var(--accent-light); stroke: var(--border); stroke-width: 1; }
+  .completion-radar .data-poly {
+    fill: var(--accent); fill-opacity: 0.22;
+    stroke: var(--accent); stroke-width: 2;
+    transition: fill-opacity .6s ease;
   }
-  .completion-percent { font-size: 24px; font-weight: 700; color: var(--primary); }
-  .completion-label { font-size: 12px; color: var(--text-secondary); }
+  .completion-radar .axis-label {
+    font-size: 12px; fill: var(--text); font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  .completion-radar .axis-value {
+    font-size: 10px; fill: var(--text-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  .completion-radar .data-point {
+    fill: var(--accent); stroke: #fff; stroke-width: 2;
+  }
+  @media (max-width: 600px) {
+    .completion-radar { width: 240px; height: 240px; }
+  }
   .completion-modules {
     display: flex; flex-wrap: wrap; gap: 12px;
     justify-content: center; margin-top: 16px;
@@ -872,6 +958,70 @@
   .poetic-empty { text-align: center; color: var(--text-secondary); font-size: 14px; padding: 20px; }
   .poetic-hint { text-align: center; font-size: 13px; color: var(--hint); margin-top: 10px; }
   .poetic-count-hint { text-align: center; font-size: 12px; opacity: 0; margin-top: 8px; position: relative; z-index: 1; animation: verseReveal 0.5s ease forwards; }
+
+  /* Summary view toggle (full / family) */
+  .summary-view-toggle {
+    display: flex; gap: 0;
+    background: var(--bg-soft);
+    border-radius: 999px;
+    padding: 4px;
+    width: fit-content;
+    margin: 0 auto 20px;
+    border: 1px solid var(--border);
+  }
+  .summary-view-btn {
+    padding: 8px 18px;
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+    font-family: inherit;
+  }
+  .summary-view-btn:hover { color: var(--primary); }
+  .summary-view-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(196,137,74,0.25);
+  }
+  .summary-view-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Family view card */
+  .summary-card.family-card {
+    border-left: 4px solid var(--accent);
+  }
+  .summary-card.family-card h3 {
+    color: var(--accent);
+  }
+  .fv-label {
+    display: inline-block;
+    min-width: 90px;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .fv-value {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .fv-value.empty {
+    color: #999;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .family-hint {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 14px;
+    padding: 10px;
+    background: var(--accent-light);
+    border-radius: 8px;
+  }
 
   /* Family one-page preview/print */
   .family-page {
@@ -1530,6 +1680,22 @@ function buildLetter(idx) {
         <label>最想说的话（关键词/场景，用逗号分隔）</label>
         <textarea id="letter-keywords" placeholder="例如：第一次见面的咖啡馆、一起养的那只猫、谢谢你一直包容我、最想道歉的事、最难忘的旅行..." oninput="collectCurrentData()"></textarea>
       </div>
+      <div class="form-group capsule-group">
+        <label>⏳ 时间胶囊（可选）<span class="capsule-hint">—— 设置希望家人何时打开这封信</span></label>
+        <div class="capsule-row">
+          <input type="date" id="letter-capsule-date" onchange="collectCurrentData(); onDateChange();" />
+          <span class="capsule-or">或</span>
+          <select id="letter-capsule-event" onchange="collectCurrentData(); onEventChange();">
+            <option value="">不指定</option>
+            <option value="1y">1 年后</option>
+            <option value="3y">3 年后</option>
+            <option value="5y">5 年后</option>
+            <option value="10y">10 年后</option>
+            <option value="birthday">下一个生日</option>
+          </select>
+        </div>
+        <div class="capsule-preview" id="capsule-preview" style="display:none;"></div>
+      </div>
       <button class="btn btn-primary" onclick="generateLetter()">✨ 生成告别信</button>
       <div id="letter-output-wrap" style="margin-top:20px;display:none;">
         <label>生成的告别信（可直接编辑）</label>
@@ -1725,21 +1891,70 @@ function renderCompletion() {
   ];
   const completed = checks.filter(c => c.filled).length;
   const percent = completed / 6;
-  const circumference = 2 * Math.PI * 52;
-  const offset = circumference * (1 - percent);
+
+  // === Six-axis radar chart (pure SVG) ===
+  const W = 280, H = 280;
+  const cx = W / 2, cy = H / 2;
+  const radius = 90; // outer radius
+  const N = checks.length;
+  // Axis direction angles (start at top, clockwise)
+  const angleAt = (i) => -Math.PI / 2 + (i * 2 * Math.PI / N);
+  const point = (i, ratio) => {
+    const a = angleAt(i);
+    const r = radius * ratio;
+    return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r };
+  };
+  // Build concentric grid polygons (4 levels: 25/50/75/100)
+  let gridSvg = '';
+  [0.25, 0.5, 0.75, 1].forEach((scale) => {
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const p = point(i, scale);
+      pts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+    }
+    gridSvg += `<polygon class="grid-poly" points="${pts.join(' ')}" />`;
+  });
+  // Build axes & labels
+  let axesSvg = '';
+  let labelsSvg = '';
+  checks.forEach((c, i) => {
+    const p = point(i, 1);
+    const lp = point(i, 1.18); // label outside
+    const lpVal = point(i, 1.42); // value outside (extra gap to avoid overlap)
+    axesSvg += `<line class="axis" x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" aria-hidden="true" />`;
+    const filledTxt = c.filled ? '已填' : '待办';
+    // Use SVG font-family attribute to ensure cross-platform rendering; dy shift compensates for dominant-baseline
+    labelsSvg += `<text class="axis-label" x="${lp.x.toFixed(1)}" y="${lp.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" dy="0.35em" font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" aria-label="${c.label}：${filledTxt}">${c.label}</text>`;
+    labelsSvg += `<text class="axis-value" x="${lpVal.x.toFixed(1)}" y="${lpVal.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" dy="0.35em" font-family="-apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" aria-hidden="true">${filledTxt}</text>`;
+  });
+  // Data polygon: each axis value 1 if filled, 0.05 if not (so empty points still show a small dot at center)
+  const dataPts = [];
+  checks.forEach((c, i) => {
+    const p = point(i, c.filled ? 1 : 0.05);
+    dataPts.push(`${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+  });
+  const dataDots = checks.map((c, i) => {
+    const p = point(i, c.filled ? 1 : 0.05);
+    return `<circle class="data-point" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" aria-hidden="true" />`;
+  }).join('');
+
+  const radarSvg = `
+    <svg class="completion-radar" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="radar-title radar-desc">
+      <title id="radar-title">六维完成度雷达图</title>
+      <desc id="radar-desc">已完成 ${completed} / 6 个模块（${Math.round(percent * 100)}%）：${checks.map(c => `${c.label} ${c.filled ? '已填' : '待办'}`).join('，')}。</desc>
+      <g aria-hidden="true">${gridSvg}</g>
+      ${axesSvg}
+      <polygon class="data-poly" points="${dataPts.join(' ')}" aria-hidden="true" />
+      ${dataDots}
+      ${labelsSvg}
+    </svg>
+  `;
 
   let html = `<div class="completion-dashboard">`;
-  html += `<div class="completion-ring">
-    <svg width="120" height="120" viewBox="0 0 120 120">
-      <circle class="completion-ring-bg" cx="60" cy="60" r="52"/>
-      <circle class="completion-ring-fill" cx="60" cy="60" r="52" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
-    </svg>
-    <div class="completion-text">
-      <div class="completion-percent">${Math.round(percent * 100)}%</div>
-      <div class="completion-label">已完成</div>
-    </div>
-  </div>`;
-  html += `<div style="margin-top:8px;font-size:14px;color:var(--text-secondary);">已完成 ${completed}/6 个模块</div>`;
+  html += `<div class="completion-radar-wrap">`;
+  html += radarSvg;
+  html += `</div>`;
+  html += `<div style="font-size:15px;color:var(--text);">已完成 <strong style="color:var(--accent);font-size:18px;">${completed}</strong>/6 个模块（${Math.round(percent * 100)}%）</div>`;
   html += `<div class="completion-modules">`;
   checks.forEach(c => {
     html += `<div class="completion-module"><span class="completion-dot ${c.filled ? 'done' : ''}"></span>${c.label}</div>`;
@@ -1781,7 +1996,11 @@ function collectCurrentData() {
       to: gv('letter-to'),
       tone: gv('letter-tone'),
       keywords: gv('letter-keywords'),
-      content: gv('letter-output')
+      content: gv('letter-output'),
+      capsule: {
+        date: gv('letter-capsule-date') || null,
+        event: gv('letter-capsule-event') || null
+      }
     };
     data.lastDay = {
       morning: gv('lastday-morning'),
@@ -1866,11 +2085,15 @@ function restoreData() {
     if (data.letter.to) document.getElementById('letter-to').value = data.letter.to;
     if (data.letter.tone) document.getElementById('letter-tone').value = data.letter.tone;
     if (data.letter.keywords) document.getElementById('letter-keywords').value = data.letter.keywords;
+    if (data.letter.capsule?.date) document.getElementById('letter-capsule-date').value = data.letter.capsule.date;
+    if (data.letter.capsule?.event) document.getElementById('letter-capsule-event').value = data.letter.capsule.event;
     if (data.letter.content) {
       document.getElementById('letter-output').value = data.letter.content;
       document.getElementById('letter-output-wrap').style.display = 'block';
     }
   }
+  // Update capsule preview on load (in case state was restored)
+  if (typeof updateCapsuleHint === 'function') updateCapsuleHint();
   if (data.lastDay) {
     ['morning','forenoon','noon','afternoon','dusk','night'].forEach(k => {
       const el = document.getElementById('lastday-' + k);
@@ -2004,6 +2227,115 @@ function closePoeticFullscreen() {
   if (wrap) wrap.classList.remove('fullscreen');
 }
 
+// === Time capsule helpers ===
+// Format a Date as local YYYY-MM-DD (no UTC shift)
+function toLocalDateStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function computeCapsuleDate() {
+  // Returns YYYY-MM-DD string (local) or null
+  const explicit = gv('letter-capsule-date');
+  if (explicit) {
+    // Validate strict YYYY-MM-DD format (some browsers let users type 2026-02-31 into date inputs)
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(explicit) || isNaN(new Date(explicit).getTime())) {
+      const preview = document.getElementById('capsule-preview');
+      if (preview) {
+        preview.innerHTML = '<span style="color:#c0392b;">⚠ 日期格式无效（不存在该日期），请重新选择</span>';
+        preview.style.display = 'block';
+      }
+      return null;
+    }
+    return explicit;
+  }
+  const event = gv('letter-capsule-event');
+  if (!event) return null;
+  const now = new Date();
+  if (event.endsWith('y')) {
+    const years = parseInt(event, 10);
+    if (!isNaN(years)) {
+      const d = new Date(now.getFullYear() + years, now.getMonth(), now.getDate());
+      return toLocalDateStr(d);
+    }
+  }
+  if (event === 'birthday') {
+    // Next birthday: assume current year if not passed, else next year
+    const d = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+    return toLocalDateStr(d);
+  }
+  return null;
+}
+
+function updateCapsuleHint() {
+  const preview = document.getElementById('capsule-preview');
+  if (!preview) return;
+  const target = computeCapsuleDate();
+  if (!target) {
+    preview.style.display = 'none';
+    preview.innerHTML = '';
+    return;
+  }
+  const targetDate = new Date(target);
+  if (isNaN(targetDate.getTime())) {
+    preview.style.display = 'none';
+    return;
+  }
+  // Use local midnight for both sides to avoid any DST/UTC edge cases
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const targetMidnight = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  // Convert to y/m/d and diff in days using local components (avoids DST issues)
+  const MS_PER_DAY = 86400000;
+  const days = Math.round((targetMidnight - today) / MS_PER_DAY);
+  const dateStr = targetDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+  let text;
+  if (days > 0) {
+    // Add human-friendly "X 年 Y 个月" approximation for >=60 days
+    let approx = '';
+    if (days >= 60) {
+      const months = Math.round(days / 30);
+      if (months >= 24) {
+        const years = (months / 12).toFixed(1).replace(/\.0$/, '');
+        approx = `（约 ${years} 年）`;
+      } else {
+        approx = `（约 ${months} 个月）`;
+      }
+    }
+    text = `<span class="lock">🔒 这封信将在 ${dateStr}（约 ${days} 天后）${approx}打开</span><br>导出 PDF 抬头会标注该日期，作为时间胶囊使用。`;
+  } else if (days === 0) {
+    text = `<span class="lock">📬 这封信将在今天 ${dateStr} 打开</span><br>已到解锁时间。`;
+  } else {
+    text = `<span class="lock">📬 这封信将于 ${dateStr} 解锁（已过期 ${-days} 天）</span><br>如需重新设置，请调整上方的日期。`;
+  }
+  preview.innerHTML = text;
+  preview.style.display = 'block';
+}
+
+function formatCapsuleDateForPdf() {
+  const target = computeCapsuleDate();
+  if (!target) return null;
+  const d = new Date(target);
+  if (isNaN(d.getTime())) return null;
+  return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// When user manually picks a date, clear the shortcut event (avoids stale state)
+function onDateChange() {
+  const ev = document.getElementById('letter-capsule-event');
+  if (ev) ev.value = '';
+  updateCapsuleHint();
+}
+
+// When user picks a shortcut event, clear the manual date (so computeCapsuleDate uses the event)
+function onEventChange() {
+  const dateInput = document.getElementById('letter-capsule-date');
+  if (dateInput) dateInput.value = '';
+  updateCapsuleHint();
+}
+
 function renderLastDayCard() {
   const wrap = document.getElementById('poetic-card-wrap');
   const hint = document.getElementById('poetic-hint');
@@ -2056,9 +2388,14 @@ function exportLetterPDF() {
   const toMap = { spouse: '配偶', child: '子女', parent: '父母', friend: '挚友', sibling: '兄弟姐妹' };
   const to = toMap[data.letter?.to] || '家人';
   const date = new Date().toLocaleDateString('zh-CN');
+  const capsuleDate = formatCapsuleDateForPdf();
+  const capsuleBadge = capsuleDate
+    ? `<div style="display:inline-block;margin-top:10px;padding:6px 14px;background:#fff5e6;border:1.5px dashed #c4894a;border-radius:999px;color:#c4894a;font-size:13px;letter-spacing:0.04em;">⏳ 时间胶囊 · 将在 <strong>${escapeHtml(capsuleDate)}</strong> 打开</div>`
+    : '';
   const header = `<div style="text-align:center; margin-bottom:24px;">
     <h2 style="margin:0; color:#2a2520;">致 ${escapeHtml(to)} 的告别信</h2>
     <div style="color:#999; font-size:13px; margin-top:6px;">${date}</div>
+    ${capsuleBadge}
   </div>`;
   const w = window.open('', '_blank');
   w.document.write(`<html><head><meta charset="UTF-8"><title>告别信</title><style>body{font-family:sans-serif;max-width:700px;margin:40px auto;line-height:1.9;color:#2d2d3a;padding:20px;}</style></head><body>${header}<div style="white-space:pre-wrap;line-height:1.9;">${escapeHtml(content)}</div>
@@ -2074,66 +2411,131 @@ function exportLetterPDF() {
 
 function renderSummary() {
   const container = document.getElementById('summary-content');
-  let html = '';
+  // Render view toggle + cards based on current view mode
+  const view = (window._summaryView = window._summaryView || 'full');
+  let toggleHtml = `
+    <div class="summary-view-toggle" role="tablist" aria-label="汇总页视图切换">
+      <button type="button" class="summary-view-btn ${view === 'full' ? 'active' : ''}" role="tab" aria-selected="${view === 'full'}" data-view="full">📋 完整版</button>
+      <button type="button" class="summary-view-btn ${view === 'family' ? 'active' : ''}" role="tab" aria-selected="${view === 'family'}" data-view="family">🤝 家属视角</button>
+    </div>
+  `;
+  let html = toggleHtml;
 
-  html += `<div class="card summary-card"><h3>📋 遗嘱要点</h3><div class="summary-content">`;
-  if (data.will?.name) {
-    html += `姓名：${escapeHtml(data.will.name)}<br>身份证号：${escapeHtml(data.will.idcard)||'未填写'}<br>房产：${fmt(data.will.house)}<br>存款与理财：${fmt(data.will.savings)}<br>保险：${fmt(data.will.insurance)}<br>其他资产：${fmt(data.will.other)}<br>受益人及分配：${fmt(data.will.beneficiary)}`;
-  } else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+  if (view === 'family') {
+    // === Family view: only show the most important fields a family needs ===
+    const name = data.will?.name?.trim();
+    const body = data.funeral?.body ? bodyLabel(data.funeral.body) : null;
+    const ash = data.funeral?.ash ? ashLabel(data.funeral.ash) : null;
+    const cpr = data.medical?.cpr ? medLabel('cpr', data.medical.cpr) : null;
+    const organ = data.medical?.organ ? medLabel('organ', data.medical.organ) : null;
+    const digitalRows = (data.digital || []).filter(r => r.platform);
+    const hasInsurance = data.will?.insurance;
+    const hasOther = data.will?.other;
+    const farewell = data.letter?.content ? data.letter.content.split('\n').find(l => l.trim()) : null;
 
-  html += `<div class="card summary-card"><h3>💻 数字遗产</h3><div class="summary-content">`;
-  if (data.digital?.length && data.digital.some(r => r.platform)) {
-    data.digital.forEach(r => {
-      if (r.platform) html += `• ${escapeHtml(r.platform)}（${escapeHtml(r.account)||'账号未填'}）— ${actionLabel(r.action)} ${r.note?'— '+escapeHtml(r.note):''}<br>`;
-    });
-  } else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+    html += `<div class="card summary-card family-card"><h3>👤 姓名</h3><div class="summary-content">${name ? escapeHtml(name) : '<span class="empty">未填写</span>'}</div></div>`;
 
-  html += `<div class="card summary-card"><h3>✉️ 告别信</h3><div class="summary-content">`;
-  if (data.letter?.content) html += `<div style="white-space:pre-wrap;line-height:1.9;">${escapeHtml(data.letter.content)}</div>`;
-  else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+    html += `<div class="card summary-card family-card"><h3>🕊 殡葬安排（核心）</h3><div class="summary-content">`;
+    html += `<div><span class="fv-label">遗体处理</span><span class="fv-value ${body ? '' : 'empty'}">${body ? escapeHtml(body) : '未选择'}</span></div>`;
+    html += `<div><span class="fv-label">骨灰安置</span><span class="fv-value ${ash ? '' : 'empty'}">${ash ? escapeHtml(ash) : '未选择'}</span></div>`;
+    html += `</div></div>`;
 
-  html += `<div class="card summary-card"><h3>🏥 医疗预嘱</h3><div class="summary-content">`;
-  if (data.medical?.cpr) {
-    html += `心肺复苏：${medLabel('cpr',data.medical.cpr)}<br>`;
-    html += `机械通气：${medLabel('ventilator',data.medical.ventilator)}<br>`;
-    html += `人工营养：${medLabel('nutrition',data.medical.nutrition)}<br>`;
-    html += `器官捐献：${medLabel('organ',data.medical.organ)}<br>`;
-    html += `临终场所：${medLabel('place',data.medical.place)}`;
-  } else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+    html += `<div class="card summary-card family-card"><h3>🏥 医疗预嘱（关键）</h3><div class="summary-content">`;
+    html += `<div><span class="fv-label">心肺复苏 CPR</span><span class="fv-value ${cpr ? '' : 'empty'}">${cpr ? escapeHtml(cpr) : '未选择'}</span></div>`;
+    html += `<div><span class="fv-label">器官捐献</span><span class="fv-value ${organ ? '' : 'empty'}">${organ ? escapeHtml(organ) : '未选择'}</span></div>`;
+    html += `</div></div>`;
 
-  html += `<div class="card summary-card"><h3>🕊 殡葬安排</h3><div class="summary-content">`;
-  if (data.funeral?.body) {
-    html += `遗体处理：${bodyLabel(data.funeral.body)}<br>`;
-    html += `骨灰安置：${ashLabel(data.funeral.ash)}<br>`;
-    html += `具体安排：${fmt(data.funeral.detail)}<br>`;
-    html += `仪式规模：${scaleLabel(data.funeral.scale)}<br>`;
-    html += `宗教/文化仪式：${religionLabel(data.funeral.religion)}<br>`;
-    html += `特殊要求：${fmt(data.funeral.special)}`;
-  } else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+    html += `<div class="card summary-card family-card"><h3>💻 数字遗产</h3><div class="summary-content">`;
+    if (digitalRows.length) {
+      digitalRows.forEach(r => {
+        html += `• ${escapeHtml(r.platform)}（${escapeHtml(r.account) || '账号未填'}）— ${actionLabel(r.action)}${r.note ? ' — ' + escapeHtml(r.note) : ''}<br>`;
+      });
+    } else html += '<span class="empty">未整理</span>';
+    html += `</div></div>`;
 
-  html += `<div class="card summary-card"><h3>🌅 我的最后一天</h3><div class="summary-content">`;
-  const lastDayFields = [
-    { key: 'morning', label: '清晨' },
-    { key: 'forenoon', label: '上午' },
-    { key: 'noon', label: '中午' },
-    { key: 'afternoon', label: '下午' },
-    { key: 'dusk', label: '傍晚' },
-    { key: 'night', label: '深夜' }
-  ];
-  const anyLastDay = data.lastDay && lastDayFields.some(f => data.lastDay[f.key]);
-  if (anyLastDay) {
-    lastDayFields.forEach(f => {
-      html += `${f.label}：${data.lastDay[f.key] ? escapeHtml(data.lastDay[f.key]) : '<span class="empty">未填写</span>'}<br>`;
-    });
-  } else html += '<span class="empty">未填写</span>';
-  html += `</div></div>`;
+    html += `<div class="card summary-card family-card"><h3>📑 保险 / 其他资产</h3><div class="summary-content">`;
+    if (hasInsurance || hasOther) {
+      if (hasInsurance) html += `<strong>保险：</strong>${escapeHtml(hasInsurance)}<br>`;
+      if (hasOther) html += `<strong>其他：</strong>${escapeHtml(hasOther)}`;
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    if (farewell) html += `<div class="card summary-card family-card"><h3>✉️ 一句告别</h3><div class="summary-content"><em>${escapeHtml(farewell)}</em></div></div>`;
+
+    html += `<div class="family-hint">家属视角仅显示关键信息。如需完整信息，请切换「完整版」。</div>`;
+  } else {
+    // === Full view: original 6 cards ===
+    html += `<div class="card summary-card"><h3>📋 遗嘱要点</h3><div class="summary-content">`;
+    if (data.will?.name) {
+      html += `姓名：${escapeHtml(data.will.name)}<br>身份证号：${escapeHtml(data.will.idcard)||'未填写'}<br>房产：${fmt(data.will.house)}<br>存款与理财：${fmt(data.will.savings)}<br>保险：${fmt(data.will.insurance)}<br>其他资产：${fmt(data.will.other)}<br>受益人及分配：${fmt(data.will.beneficiary)}`;
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    html += `<div class="card summary-card"><h3>💻 数字遗产</h3><div class="summary-content">`;
+    if (data.digital?.length && data.digital.some(r => r.platform)) {
+      data.digital.forEach(r => {
+        if (r.platform) html += `• ${escapeHtml(r.platform)}（${escapeHtml(r.account)||'账号未填'}）— ${actionLabel(r.action)} ${r.note?'— '+escapeHtml(r.note):''}<br>`;
+      });
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    html += `<div class="card summary-card"><h3>✉️ 告别信</h3><div class="summary-content">`;
+    if (data.letter?.content) html += `<div style="white-space:pre-wrap;line-height:1.9;">${escapeHtml(data.letter.content)}</div>`;
+    else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    html += `<div class="card summary-card"><h3>🏥 医疗预嘱</h3><div class="summary-content">`;
+    if (data.medical?.cpr) {
+      html += `心肺复苏：${medLabel('cpr',data.medical.cpr)}<br>`;
+      html += `机械通气：${medLabel('ventilator',data.medical.ventilator)}<br>`;
+      html += `人工营养：${medLabel('nutrition',data.medical.nutrition)}<br>`;
+      html += `器官捐献：${medLabel('organ',data.medical.organ)}<br>`;
+      html += `临终场所：${medLabel('place',data.medical.place)}`;
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    html += `<div class="card summary-card"><h3>🕊 殡葬安排</h3><div class="summary-content">`;
+    if (data.funeral?.body) {
+      html += `遗体处理：${bodyLabel(data.funeral.body)}<br>`;
+      html += `骨灰安置：${ashLabel(data.funeral.ash)}<br>`;
+      html += `具体安排：${fmt(data.funeral.detail)}<br>`;
+      html += `仪式规模：${scaleLabel(data.funeral.scale)}<br>`;
+      html += `宗教/文化仪式：${religionLabel(data.funeral.religion)}<br>`;
+      html += `特殊要求：${fmt(data.funeral.special)}`;
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+
+    html += `<div class="card summary-card"><h3>🌅 我的最后一天</h3><div class="summary-content">`;
+    const lastDayFields = [
+      { key: 'morning', label: '清晨' },
+      { key: 'forenoon', label: '上午' },
+      { key: 'noon', label: '中午' },
+      { key: 'afternoon', label: '下午' },
+      { key: 'dusk', label: '傍晚' },
+      { key: 'night', label: '深夜' }
+    ];
+    const anyLastDay = data.lastDay && lastDayFields.some(f => data.lastDay[f.key]);
+    if (anyLastDay) {
+      lastDayFields.forEach(f => {
+        html += `${f.label}：${data.lastDay[f.key] ? escapeHtml(data.lastDay[f.key]) : '<span class="empty">未填写</span>'}<br>`;
+      });
+    } else html += '<span class="empty">未填写</span>';
+    html += `</div></div>`;
+  }
 
   container.innerHTML = html;
+  // Event delegation on the container is sufficient here, since we render to the same container
+  // each time. To avoid stacking listeners, we attach with an "instance" guard.
+  if (!container._summaryViewDelegated) {
+    container._summaryViewDelegated = true;
+    container.addEventListener('click', (e) => {
+      const btn = e.target.closest('.summary-view-btn');
+      if (!btn) return;
+      if (btn.getAttribute('data-view') === window._summaryView) return;
+      window._summaryView = btn.getAttribute('data-view');
+      renderSummary();
+    });
+  }
 }
 
 function fmt(v) { return v ? escapeHtml(v) : '<span class="empty">未填写</span>'; }
@@ -2193,8 +2595,13 @@ function exportFullPDF() {
   body += `</div>`;
 
   body += `<div class="section"><h2>✉️ 告别信</h2>`;
-  if (data.letter?.content) body += `<div class="letter">${escapeHtml(data.letter.content)}</div>`;
-  else body += '<p class="empty">未填写</p>';
+  const fullCapsuleDate = formatCapsuleDateForPdf();
+  if (data.letter?.content) {
+    if (fullCapsuleDate) {
+      body += `<div style="background:#fff5e6;border:1.5px dashed #c4894a;border-radius:6px;padding:8px 14px;margin-bottom:12px;color:#c4894a;font-size:13px;display:inline-block;">⏳ 时间胶囊 · 将在 <strong>${escapeHtml(fullCapsuleDate)}</strong> 打开</div><br>`;
+    }
+    body += `<div class="letter">${escapeHtml(data.letter.content)}</div>`;
+  } else body += '<p class="empty">未填写</p>';
   body += `</div>`;
 
   body += `<div class="section"><h2>🏥 医疗预嘱</h2>`;
@@ -2247,17 +2654,22 @@ function exportFamilyOnePage() {
   const body = data.funeral?.body ? bodyLabel(data.funeral.body) : '您尚未选择遗体处理方式';
   const ash = data.funeral?.ash ? ashLabel(data.funeral.ash) : '您尚未选择骨灰安置方式';
   const scale = data.funeral?.scale ? scaleLabel(data.funeral.scale) : '您尚未选择仪式规模';
+  const religion = data.funeral?.religion ? religionLabel(data.funeral.religion) : '您尚未选择宗教/文化仪式';
   const cpr = data.medical?.cpr ? medLabel('cpr', data.medical.cpr) : '您尚未选择 CPR 意愿';
   const organ = data.medical?.organ ? medLabel('organ', data.medical.organ) : '您尚未选择器官捐献意愿';
+  const place = data.medical?.place ? medLabel('place', data.medical.place) : '您尚未选择临终场所';
   const digitalRows = (data.digital || []).filter(r => r.platform);
   const digitalText = digitalRows.length
     ? digitalRows.map(r => `${escapeHtml(r.platform)}（${escapeHtml(r.account) || '账号未填'}）— ${actionLabel(r.action)}${r.note ? ' — ' + escapeHtml(r.note) : ''}`).join('\n')
     : '您尚未整理数字遗产';
   const documents = data.will?.insurance || data.will?.other
-    ? [data.will.insurance, data.will.other].filter(Boolean).join('\n')
+    ? [data.will.insurance && `保险：${data.will.insurance}`, data.will.other && `其他资产：${data.will.other}`].filter(Boolean).join('\n')
     : '您尚未记录保险与其他资产';
-  const farewell = data.letter?.content ? data.letter.content.split('\n')[0].trim() : '';
+  const farewell = data.letter?.content ? data.letter.content.split('\n').filter(l => l.trim()).slice(0, 3).join('\n') : '';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('zh-CN');
 
+  // === Enhanced family one-page PDF: bigger fonts, highlighted key items, emergency info section ===
   const html = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -2265,77 +2677,142 @@ function exportFamilyOnePage() {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>给家人的一页纸</title>
 <style>
-  @media print { .no-print { display: none !important; } .family-page { padding: 0; max-width: none; } }
+  @page { size: A4; margin: 0; }
+  @media print {
+    .no-print { display: none !important; }
+    .family-page { padding: 14mm 18mm !important; max-width: none !important; min-height: auto !important; box-shadow: none !important; }
+    .urgent-box { background: #fff5e6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .accent-band { background: #c4894a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
   body { margin: 0; background: #f7f7f3; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
-  .family-page { max-width: 210mm; margin: 0 auto; padding: 16mm; color: #2d2d3a; line-height: 1.7; background: #fff; min-height: 297mm; box-sizing: border-box; }
-  .family-page h1 { text-align: center; color: #2a2520; font-size: 26px; margin-bottom: 6px; }
-  .family-page .sub { text-align: center; color: #6b6b7b; font-size: 13px; margin-bottom: 28px; }
-  .family-page h2 { font-size: 15px; color: #2a2520; border-bottom: 1px solid #c4894a; padding-bottom: 4px; margin: 18px 0 10px; }
-  .family-page .item { margin-bottom: 10px; font-size: 14px; }
-  .family-page .label { color: #6b6b7b; font-size: 12px; margin-bottom: 2px; }
-  .family-page .value { color: #2d2d3a; white-space: pre-wrap; }
-  .family-page .value.empty { color: #999; font-style: italic; }
-  .family-page .farewell { background: #fafaf5; padding: 14px; border-radius: 8px; margin-top: 10px; font-style: italic; color: #4a4a5a; white-space: pre-wrap; }
+  .family-page {
+    max-width: 210mm; margin: 16px auto; padding: 18mm 20mm;
+    color: #2d2d3a; line-height: 1.7;
+    background: #fff; min-height: 297mm; box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  /* Header with accent band */
+  .accent-band {
+    background: linear-gradient(135deg, #c4894a 0%, #d9a05d 100%);
+    color: #fff;
+    padding: 18px 22px;
+    border-radius: 10px;
+    margin: -8px -8px 22px;
+    text-align: center;
+  }
+  .accent-band h1 { margin: 0; font-size: 24px; letter-spacing: 0.05em; }
+  .accent-band .sub { margin-top: 4px; font-size: 13px; opacity: 0.92; }
+
+  /* Urgent info box (highlighted) */
+  .urgent-box {
+    background: #fff5e6;
+    border-left: 5px solid #c4894a;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+  }
+  .urgent-box h2 {
+    color: #c4894a !important; border: 0 !important; padding: 0 !important;
+    font-size: 14px !important; margin: 0 0 8px !important;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .urgent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .urgent-item { font-size: 14px; }
+  .urgent-item .lbl { color: #8a6d3b; font-size: 12px; display: block; }
+  .urgent-item .val { color: #2a2520; font-weight: 600; font-size: 15px; }
+
+  h2 { font-size: 16px; color: #2a2520; border-bottom: 1.5px solid #c4894a; padding-bottom: 4px; margin: 18px 0 10px; }
+  .item { margin-bottom: 10px; font-size: 14px; }
+  .item .label { color: #6b6b7b; font-size: 12px; margin-bottom: 2px; }
+  .item .value { color: #2d2d3a; white-space: pre-wrap; font-size: 14px; }
+  .item .value.empty { color: #999; font-style: italic; }
+  .farewell {
+    background: #fafaf5; padding: 16px; border-radius: 8px;
+    margin-top: 10px; font-style: italic; color: #4a4a5a; white-space: pre-wrap;
+    border-left: 3px solid #c4894a;
+    font-size: 15px; line-height: 1.9;
+  }
   .family-actions { display: flex; justify-content: center; gap: 12px; margin-top: 28px; }
   .family-actions button { padding: 10px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
   .family-actions .primary { background: #c4894a; color: #fff; }
   .family-actions .secondary { background: #f7f7f3; color: #2d2d3a; border: 1px solid #e8e6e1; }
   .family-hint { text-align: center; font-size: 12px; color: #999; margin-top: 12px; }
+  .legal-note {
+    margin-top: 18px; padding-top: 12px; border-top: 1px dashed #e8e6e1;
+    font-size: 11px; color: #999; text-align: center; line-height: 1.6;
+  }
+  @media (max-width: 600px) {
+    .urgent-grid { grid-template-columns: 1fr; }
+    .family-page { padding: 14mm 14mm; }
+  }
 </style>
 </head>
 <body>
 <div class="family-page">
-  <h1>给家人的一页纸</h1>
-  <div class="sub">${escapeHtml(new Date().toLocaleDateString('zh-CN'))}</div>
-
-  <h2>逝者姓名</h2>
-  <div class="item"><div class="value ${name === '您尚未留下姓名' ? 'empty' : ''}">${escapeHtml(name)}</div></div>
-
-  <h2>遗体处理</h2>
-  <div class="item"><div class="value ${data.funeral?.body ? '' : 'empty'}">${escapeHtml(body)}</div></div>
-
-  <h2>骨灰安置</h2>
-  <div class="item"><div class="value ${data.funeral?.ash ? '' : 'empty'}">${escapeHtml(ash)}</div></div>
-
-  <h2>葬礼仪式规模</h2>
-  <div class="item"><div class="value ${data.funeral?.scale ? '' : 'empty'}">${escapeHtml(scale)}</div></div>
-
-  <h2>医疗预嘱关键决策</h2>
-  <div class="item">
-    <div class="label">心肺复苏（CPR）</div>
-    <div class="value ${data.medical?.cpr ? '' : 'empty'}">${escapeHtml(cpr)}</div>
+  <div class="accent-band">
+    <h1>给家人的一页纸</h1>
+    <div class="sub">由「临终规划师」生成 · ${escapeHtml(dateStr)}</div>
   </div>
-  <div class="item">
-    <div class="label">器官捐献</div>
-    <div class="value ${data.medical?.organ ? '' : 'empty'}">${escapeHtml(organ)}</div>
+
+  <!-- Urgent info: most critical for the family -->
+  <div class="urgent-box">
+    <h2>⚠ 关键信息（家属优先看）</h2>
+    <div class="urgent-grid">
+      <div class="urgent-item"><span class="lbl">逝者姓名</span><span class="val">${escapeHtml(name)}</span></div>
+      <div class="urgent-item"><span class="lbl">心肺复苏意愿</span><span class="val">${escapeHtml(cpr)}</span></div>
+      <div class="urgent-item"><span class="lbl">遗体处理</span><span class="val">${escapeHtml(body)}</span></div>
+      <div class="urgent-item"><span class="lbl">器官捐献</span><span class="val">${escapeHtml(organ)}</span></div>
+      <div class="urgent-item"><span class="lbl">骨灰安置</span><span class="val">${escapeHtml(ash)}</span></div>
+      <div class="urgent-item"><span class="lbl">临终场所</span><span class="val">${escapeHtml(place)}</span></div>
+    </div>
   </div>
+
+  <h2>葬礼安排</h2>
+  <div class="item"><div class="label">仪式规模</div><div class="value ${data.funeral?.scale ? '' : 'empty'}">${escapeHtml(scale)}</div></div>
+  <div class="item"><div class="label">宗教/文化仪式</div><div class="value ${data.funeral?.religion ? '' : 'empty'}">${escapeHtml(religion)}</div></div>
+  <div class="item"><div class="label">具体安排</div><div class="value ${data.funeral?.detail ? '' : 'empty'}">${escapeHtml(data.funeral?.detail) || '未填写'}</div></div>
+  <div class="item"><div class="label">特殊要求</div><div class="value ${data.funeral?.special ? '' : 'empty'}">${escapeHtml(data.funeral?.special) || '未填写'}</div></div>
 
   <h2>数字遗产处置</h2>
-  <div class="item"><div class="value ${digitalRows.length ? '' : 'empty'}">${digitalText}</div></div>
+  <div class="item"><div class="value ${digitalRows.length ? '' : 'empty'}" style="white-space:pre-wrap;">${escapeHtml(digitalText)}</div></div>
 
   <h2>保险与其他资产</h2>
-  <div class="item"><div class="value ${(data.will?.insurance || data.will?.other) ? '' : 'empty'}">${escapeHtml(documents)}</div></div>
+  <div class="item"><div class="value ${(data.will?.insurance || data.will?.other) ? '' : 'empty'}" style="white-space:pre-wrap;">${escapeHtml(documents)}</div></div>
 
-  ${farewell ? `<h2>一句告别</h2><div class="farewell">${escapeHtml(farewell)}</div>` : ''}
+  ${farewell ? `<h2>告别</h2><div class="farewell">${escapeHtml(farewell)}</div>` : ''}
+
+  <div class="legal-note">
+    本文档仅供参考，不构成法律文件。正式遗嘱/医疗预嘱请咨询专业律师或医疗机构。<br>
+    建议家属核对信息完整后，妥善保存此页；如有疑问可联系「临终规划师」原账号作者。
+  </div>
 </div>
 
 <div class="family-actions no-print">
-  <button class="primary" onclick="window.print()">确认打印</button>
+  <button class="primary" onclick="window.print()" aria-label="打印或导出 PDF 文件"><span aria-hidden="true">🖨</span> 打印 / 导出 PDF</button>
   <button class="secondary" onclick="window.close()">返回修改</button>
 </div>
-<div class="family-hint no-print">手机端可截图保存，打印前请确认信息完整。</div>
-
-<!-- Music Credit (off-screen but readable) -->
-<div style="position:fixed;bottom:4px;left:8px;font-size:10px;color:rgba(138,129,117,0.5);z-index:1;pointer-events:none;max-width:50%;">
-  🎵 <a href="https://incompetech.com/music/royalty-free/music.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">"Evening" by Kevin MacLeod</a> · CC BY 4.0
-</div>
+<div class="family-hint no-print">手机端可截图保存；浏览器"打印 → 另存为 PDF"即可获得正式 PDF 文件。</div>
 
 </body>
 </html>`;
 
   const w = window.open('', '_blank');
+  if (!w) {
+    // Mobile / Safari / WeChat may block popups. Fall back to on-page preview.
+    const fallback = document.createElement('div');
+    fallback.className = 'export-fallback';
+    fallback.innerHTML = html;
+    document.body.appendChild(fallback);
+    fallback.querySelector('.family-actions')?.addEventListener('click', () => fallback.remove());
+    alert('您的浏览器拦截了打印窗口。已在本页内展示，请使用浏览器的「打印/导出 PDF」功能。');
+    return;
+  }
   w.document.write(html);
   w.document.close();
+  // Wait for window load before triggering print (avoids race with document parsing)
+  w.addEventListener?.('load', () => setTimeout(() => { try { w.print(); } catch (e) {} }, 100));
+  // Some browsers don't fire load reliably on document.open/write; fallback after a short delay
+  setTimeout(() => { try { w.print(); } catch (e) {} }, 600);
 }
 
 function quickFill() {

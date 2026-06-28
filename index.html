@@ -111,13 +111,24 @@
   }
   .landing .btn-start:hover { background: var(--accent-hover); transform: translateY(-2px); }
   .landing .skip {
-    position: absolute; top: 20px; right: 20px;
+    position: absolute; top: 20px; left: 20px;
     color: rgba(255,255,255,0.6); font-size: 13px;
     text-decoration: none; cursor: pointer; z-index: 2;
     opacity: 0; animation: fadeIn 0.5s ease 0.1s forwards;
+    padding: 10px 14px;
+    min-height: 44px; min-width: 44px;
+    display: inline-flex; align-items: center;
+    border: none; background: transparent;
+    font-family: inherit;
+    border-radius: 22px;
+    transition: color .2s ease, background .2s ease;
+  }
+  .landing .skip:focus-visible {
+    outline: 3px solid rgba(196,137,74,0.6);
+    outline-offset: 2px;
   }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .landing .skip:hover { color: #fff; }
+  .landing .skip:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
   /* Landing music control button (visible on first screen) */
   .landing-music-btn {
@@ -858,7 +869,7 @@
       flex-wrap: wrap; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
       gap: 8px; font-size: 12px;
     }
-    .privacy-banner button { min-height: 36px; padding: 6px 12px; }
+    .privacy-banner button { min-height: 44px; padding: 8px 14px; }
     .privacy-badges-inline { gap: 5px; }
     .mini-badge { font-size: 11px; padding: 3px 8px; }
     /* Digital table card layout on mobile */
@@ -919,10 +930,10 @@
     <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
     <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
   </div>
-  <a class="skip" onclick="enterApp()">跳过，直接进入 →</a>
+  <button type="button" class="skip" onclick="enterApp()" aria-label="跳过引导，直接进入应用">跳过，直接进入 →</button>
   <button id="landingMusicBtn" class="landing-music-btn muted" onclick="toggleSound()" aria-label="切换音乐" aria-pressed="false">
     <span class="music-icon">🎵</span>
-    <span class="music-label">音乐开启</span>
+    <span class="music-label">打开音乐</span>
     <div class="music-bars" aria-hidden="true">
       <span></span><span></span><span></span><span></span>
     </div>
@@ -2367,4 +2378,3 @@ init();
 
 </body>
 </html>
-<!-- refresh -->
